@@ -5,70 +5,71 @@
 #include <stdio.h>
 
 int main() {
-    int i,j,n,A; //A is currently available resources
-    int max_need[100]={0};
-    int curr_need[100]={0};
-    int need_left[100]={0};
+    int i, n, A;   //A is currently available resources
+    printf("Enter the number of instances of A : ");
+    scanf("%d", &A);
+
+    printf("Enter the number of processes :");
+    scanf("%d", &n);
+
+
+    int max_need[100] = {0};
+    int curr_need[100] = {0};
+    int need_left[100] = {0};
     int total_curr_need = 0;
+    int remain = n;
 
-    printf("Enter number of instances of Resource ");
-    scanf("%d",&A);
 
-    printf("Enter the number of processes");
-    scanf("%d",&n);
-
-    printf("Enter the max needs");
-    for(i=0;i<n;i++){
-        scanf("%d",&max_need[i]);
+    printf("Enter the max needs : ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &max_need[i]);
     }
 
-    printf("Enter the current needs");
-    for(i=0;i<n;i++){
-        scanf("%d",&curr_need[i]);
+    printf("Enter the curr needs : ");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &curr_need[i]);
         total_curr_need += curr_need[i];
     }
 
-    for(i=0;i<n;i++) {
-        need_left[i] = max_need[i]-curr_need[i];
+    for (int i = 0; i < n; ++i) {
+        need_left[i] = max_need[i] - curr_need[i];
     }
 
     A = A - total_curr_need;
-    if(A<0){
+    if (A < 0) {
         printf("Cant execute");
     }
 
-    int processes_left = n;
     int flag = 0;
-    int counter = 0;
 
-    while(processes_left){
-        for(i=0;i<n;i++){
-            if( A >= need_left[i] && need_left[i]!=0){
-                A+=need_left[i];
-                need_left[i]=0;
-                processes_left-=1;
-                printf("P%d ",i);
-            }else{
-                counter+=1;
+    while (remain != 0) {
+        for (int i = 0; i < n; ++i) {
+            if (need_left[i] <= A && need_left[i] != 0) {
+                remain--;
+                A += curr_need[i];
+                need_left[i] = 0;
+                printf("P%d ", i);
+            } else {
+                flag += 1;
             }
         }
 
-        if(counter==n){
-            printf("No safe sequence available");
+        if (flag == n) {
+            printf("No safe sequence");
             break;
         }
-        counter = 0;
+        flag = 0;
     }
 }
 /*
 OUTPUT
 
-Enter number of instances of Resource 12
-Enter the number of processes3
-        Enter the max needs10
+Enter the number of instances of A : 12
+Enter the number of processes :3
+Enter the max needs : 10
 4
 9
-Enter the current needs5
+Enter the curr needs : 5
 2
 2
 P1 P0 P2
