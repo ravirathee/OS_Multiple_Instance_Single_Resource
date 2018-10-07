@@ -74,6 +74,22 @@ Enter the curr needs : 5
 2
 P1 P0 P2
 
+
+
+
+Enter the number of instances of A : 12
+Enter the number of processes :3
+Enter the max needs : 10
+4
+9
+Enter the curr needs : 7
+2
+2
+No safe sequence
+
+
+
+
 */
 
 
